@@ -1,26 +1,49 @@
 <template>
   <div class="container">
-      <ul>
-          <li v-for="(item, index) in productos" :key="index" :style="{backgroundColor: item.color}">{{item.codigo}} | {{item.nombre}} | {{item.stock}} | {{item.precio}}</li>
-      </ul>
+    <lista-productos></lista-productos>
+    <h3>Cantidad de juegos totales registrados: {{stockProductos.length}}</h3>
+    <br>
+    <h3>Stock por producto:</h3>
+
+    <table class="table table-striped container">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- v-for para propiedad computada traerProductos -->
+        <!-- <tr v-for="(item, index) in traerProductos" :key="index">  -->
+        
+        <!-- Con mapGetters -->
+        <tr v-for="(item, index) in stockProductos" :key="index"> 
+          <td>{{item.nombre}}</td>
+          <td>{{item.stock}}</td>
+        </tr>
+        <tr>
+          <th>STOCK TOTAL DE PRODUCTOS</th>
+          <td>{{stockTotal}}</td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import ListaProductos from '@/components/ListaProductos.vue';
+    import {mapGetters} from 'vuex';
 
-export default {
-    name: 'Busquedas',
-
-    computed: {
-        // Con la propiedad computada se obtiene la variable actualizada en tiempo real
-        // traerProductos(){
-        //     return this.$store.getters.stockProductos;
-        // }
-
-        ...mapState(['productos'])
+    export default {
+        name: 'Busquedas',
+        components: {
+            ListaProductos
+        },
+         computed: {
+        ...mapGetters(['stockProductos', 'stockTotal']),
+        }
     }
-}
 </script>
 
 <style>

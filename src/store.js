@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    totalVentas: 0,
+    stockTotal: 0,
     productos: [
       {codigo: "0001", nombre: "Sekiro", stock: "100", precio: "30000", color: "red", destacado: "true"},
       {codigo: "0002", nombre: "Fifa 21", stock: "100", precio: "25000", color: "blue", destacado: "false"},{codigo: "0003", nombre: "Gears of War 4", stock: "100", precio: "15000", color: "green", destacado: "true"},
@@ -20,10 +22,42 @@ const store = new Vuex.Store({
       return state.productos.filter((result) => {
         return result.stock > 0;
       });
+    },
+
+    stockTotal(state) {
+
+      // state.productos.forEach((producto) => {
+      //   return state.stockTotal += parseInt(producto.stock);
+      // });
+      for (let obj of state.productos){
+        return state.stockTotal += parseInt(obj.stock);
+      }
+
+    }    
+  },
+  
+  mutations: {
+    // productoVendido es lo que vamos a recibir mediante la acción
+    venderProducto(state, productoVendido) {
+      // Al objeto productos que está en store le hago un forEach
+      state.productos.forEach(producto => {
+        if(producto.codigo == productoVendido.codigo){
+          producto.stock--;
+          state.stockTotal--;
+          // Sumando precio de producto vendido
+          state.totalVentas += parseFloat(productoVendido.precio);
+          state.stockTotal -= productoVendido.stock;
+        }
+      });
     }
   },
-  mutations: {},
-  actions: {}
+
+  actions: {
+    ventaProductoMutation(context, productoVendido){
+      // A la mutación venderProducto le voy a enviar productoVendido mediante el commit
+      context.commit('venderProducto', productoVendido);
+    }
+  }
 });
 
 export default store;

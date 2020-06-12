@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-center pt-5">
         <h1>{{titulo1}}</h1>
         <h2>{{subtitulo1}}</h2>
     </div>
