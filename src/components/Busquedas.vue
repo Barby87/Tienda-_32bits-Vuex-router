@@ -1,21 +1,24 @@
 <template>
-  <div>
+  <div class="container">
       <ul>
-          <li v-for="(item, index) in traerProductos" :key="index">{{item.codigo}} | {{item.nombre}} | {{item.stock}} | {{item.precio}}</li>
+          <li v-for="(item, index) in productos" :key="index" :style="{backgroundColor: item.color}">{{item.codigo}} | {{item.nombre}} | {{item.stock}} | {{item.precio}}</li>
       </ul>
   </div>
 </template>
 
 <script>
-export default {
+    import {mapState} from 'vuex';
 
+export default {
     name: 'Busquedas',
 
     computed: {
         // Con la propiedad computada se obtiene la variable actualizada en tiempo real
-        traerProductos(){
-        return this.$store.getters.stockProductos;
-        }
+        // traerProductos(){
+        //     return this.$store.getters.stockProductos;
+        // }
+
+        ...mapState(['productos'])
     }
 }
 </script>
