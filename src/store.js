@@ -6,7 +6,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     totalVentas: 0,
-    stockTotal: 0,
     productos: [
       {codigo: "0001", nombre: "Sekiro", stock: "100", precio: "30000", color: "red", destacado: "true"},
       {codigo: "0002", nombre: "Fifa 21", stock: "100", precio: "25000", color: "blue", destacado: "false"},{codigo: "0003", nombre: "Gears of War 4", stock: "100", precio: "15000", color: "green", destacado: "true"},
@@ -24,15 +23,13 @@ const store = new Vuex.Store({
       });
     },
 
-    stockTotal(state) {
-
-      // state.productos.forEach((producto) => {
-      //   return state.stockTotal += parseInt(producto.stock);
-      // });
+    mostrarStockTotal(state) {    
+      let stockTotal = 0;
+      // Iterando arreglo de productos para obtener una suma total de sus stocks
       for (let obj of state.productos){
-        return state.stockTotal += parseInt(obj.stock);
+        stockTotal += parseInt(obj.stock);
       }
-
+      return stockTotal;
     }    
   },
   
@@ -43,10 +40,9 @@ const store = new Vuex.Store({
       state.productos.forEach(producto => {
         if(producto.codigo == productoVendido.codigo){
           producto.stock--;
-          state.stockTotal--;
           // Sumando precio de producto vendido
-          state.totalVentas += parseFloat(productoVendido.precio);
-          state.stockTotal -= productoVendido.stock;
+          state.totalVentas += parseInt(productoVendido.precio);
+          // state.stockTotal--;
         }
       });
     }
