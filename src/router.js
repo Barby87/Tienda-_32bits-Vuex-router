@@ -4,8 +4,7 @@ const Inicio = () => import('./components/Inicio');
 const Busquedas = () => import('./components/Busquedas');
 const Ventas = () => import('./components/Ventas');
 const Total = () => import('./components/Total');
-
-
+import NotFound from './components/NotFound.vue';
 
 Vue.use(Router);
 
@@ -29,6 +28,11 @@ export default new Router({
             path: '/total',
             name: 'Total',
             component: Total
-        }     
+        },
+        {
+            path: '*',
+            name: 'NotFound',
+            component: NotFound
+          }    
     ]
 });
